@@ -25,7 +25,7 @@ namespace WalidacjaNIPRegon.ControlUI
             tbData.Text = PESEL.DataUrodzenia;
             tbNrDok.Text = PESEL.NumerDokumentu;
             tbPlec.Text = PESEL.Plec;
-            if (!PESEL.ValidateOK)
+            if (!PESEL.ValidatedOK)
             {
                 lbStatus.ForeColor = Color.Red;
                 lbStatus.Text = "Wprowadź poprawnie 11 cyfr numeru PESEL";

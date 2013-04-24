@@ -31,7 +31,6 @@ namespace WalidacjaNIPRegon.Validators
         };
         int _SK = 0;
         int _suma = 0;
-        byte a = 0;
 
         public event EventHandler OnValidated;
 
@@ -40,7 +39,7 @@ namespace WalidacjaNIPRegon.Validators
             DataUrodzenia = "b/d";
             NumerDokumentu = "b/d";
             Plec = "b/d";
-            ValidateOK = false;
+            ValidatedOK = false;
         }
 
         ~PESEL() { }
@@ -63,14 +62,15 @@ namespace WalidacjaNIPRegon.Validators
             private set;
         }
 
+        private bool _DisableEvent = false;
         private bool _ValidateOK = false;
-        public bool ValidateOK
+        public bool ValidatedOK
         {
             get { return _ValidateOK; }
             private set
             {
                 _ValidateOK = value;
-                if (OnValidated != null)
+                if (OnValidated != null && value == false && _DisableEvent == false)
                     OnValidated(this, new EventArgs());
             }
         }
@@ -82,38 +82,49 @@ namespace WalidacjaNIPRegon.Validators
                 DataUrodzenia = "b/d";
                 NumerDokumentu = "b/d";
                 Plec = "b/d";
-                ValidateOK = false;
+                ValidatedOK = false;
 
                 value = value.Trim();
 
                 if (value.Length != 11)
+                {
+                    ValidatedOK = false;
                     return;
+                }
 
+                int a = 0;
+                int[] bPesel = new int[value.Length];
                 foreach (char l in value)
-                    if (!Byte.TryParse(l.ToString(), out a))
+                    if (!Int32.TryParse(l.ToString(), out bPesel[a++]))
+                    {
+                        ValidatedOK = false;
                         return;
+                    }
 
                 if (!Int32.TryParse(value[10].ToString(), out _SK))
+                {
+                    ValidatedOK = false;
                     return;
+                }
 
                 _suma = 0;
                 for (int i = 0; i < 10; i++)
-                    _suma += wagi[i] * Convert.ToInt32(value[i].ToString());
+                    _suma += wagi[i] * bPesel[i];
 
                 int mod = _suma % 10;
 
-                ValidateOK = mod != 0 ? ((10 - mod) == _SK) : true;
+                ValidatedOK = mod != 0 ? ((10 - mod) == _SK) : true;
 
-                if (ValidateOK)
+                if (ValidatedOK)
                 {
                     DataUrodzenia = ParseDate(value.Substring(0, 6));
                     NumerDokumentu = value.Substring(6, 4);
-                    Plec = (Convert.ToInt32(value[9].ToString()) % 2 != 0) ? Sex[0] : Sex[1];
-                    if (OnValidated != null)
-                        OnValidated(this, new EventArgs());
+                    Plec = (bPesel[9] % 2 != 0) ? Sex[0] : Sex[1];
+                    ValidatedOK = ValidatedOK;
                 }
             }
         }
+
         private String ParseDate(String DataUr)
         {
             int rok = 0;
@@ -130,9 +141,20 @@ namespace WalidacjaNIPRegon.Validators
 
             DateTime _date;
             if (!DateTime.TryParse(String.Format("{0}-{1}-{2}", rok, mies, dzien), out _date))
+            {
+                ValidatedOK = false;
                 return "b/d";
+            }
             else
                 return _date.ToLongDateString();
+        }
+
+        public bool IsValid(String PESEL, bool DisableEvent = true)
+        {
+            _DisableEvent = DisableEvent;
+            NrPESEL = PESEL;
+            _DisableEvent = !DisableEvent;
+            return ValidatedOK;
         }
     }
 }
