@@ -16,11 +16,12 @@ namespace WalidacjaNIPRegon.ControlUI
         public UI_PESEL()
         {
             InitializeComponent();
+            PESEL = new Validators.PESEL();
+            PESEL.OnValidated += new EventHandler(PESEL_ValidatedOK);
         }
 
-        private void textPESEL_TextChanged(object sender, EventArgs e)
+        void PESEL_ValidatedOK(object sender, EventArgs e)
         {
-            PESEL.NrPESEL = textPESEL.Text;
             tbData.Text = PESEL.DataUrodzenia;
             tbNrDok.Text = PESEL.NumerDokumentu;
             tbPlec.Text = PESEL.Plec;
@@ -34,6 +35,11 @@ namespace WalidacjaNIPRegon.ControlUI
                 lbStatus.ForeColor = Color.Black;
                 lbStatus.Text = "Wprowadzony numer jest poprawny";
             }
+        }
+
+        private void textPESEL_TextChanged(object sender, EventArgs e)
+        {
+            PESEL.NrPESEL = textPESEL.Text;
         }
     }
 }

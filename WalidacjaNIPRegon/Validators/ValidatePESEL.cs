@@ -19,6 +19,8 @@ namespace WalidacjaNIPRegon.Validators
         int _suma = 0;
         byte a = 0;
 
+        public event EventHandler OnValidated;
+
         public PESEL()
         {
             DataUrodzenia = "b/d";
@@ -47,10 +49,16 @@ namespace WalidacjaNIPRegon.Validators
             private set;
         }
 
+        private bool _ValidateOK = false;
         public bool ValidateOK
         {
-            get;
-            private set;
+            get { return _ValidateOK; }
+            private set
+            {
+                _ValidateOK = value;
+                if (OnValidated != null)
+                    OnValidated(this, new EventArgs());
+            }
         }
 
         public String NrPESEL
@@ -87,6 +95,8 @@ namespace WalidacjaNIPRegon.Validators
                     DataUrodzenia = ParseDate(value.Substring(0, 6));
                     NumerDokumentu = value.Substring(6, 4);
                     Plec = (Convert.ToInt32(value[9].ToString()) % 2 != 0) ? Sex[0] : Sex[1];
+                    if (OnValidated != null)
+                        OnValidated(this, new EventArgs());
                 }
             }
         }
@@ -96,33 +106,38 @@ namespace WalidacjaNIPRegon.Validators
             int rok = 0;
             int mies = 0;
             int dzien = Convert.ToInt32(DataUr[4].ToString()) * 10 + Convert.ToInt32(DataUr[5].ToString());
+            int[] data = new int[6];
 
-            if (DataUr[2] == '0' || DataUr[2] == '1')
+            for (int i = 0; i < 6; i++)
+                if (!Int32.TryParse(DataUr[i].ToString(), out data[i]))
+                    return "b/d";
+
+            if (data[2] == 0 || data[2] == 1)
             {
                 rok = 1900;
-                mies = Convert.ToInt32(DataUr[2].ToString()) * 10 + Convert.ToInt32(DataUr[3].ToString());
+                mies = data[2] * 10 + data[3];
             }
-            else if (DataUr[2] == '2' || DataUr[2] == '3')
+            else if (data[2] == 2 || data[2] == 3)
             {
                 rok = 2000;
-                mies = (Convert.ToInt32(DataUr[2].ToString()) - 20) * 10 + Convert.ToInt32(DataUr[3].ToString());
+                mies = (data[2] - 20) * 10 + data[3];
             }
-            else if (DataUr[2] == '4' || DataUr[2] == '5')
+            else if (data[2] == 4 || data[2] == 5)
             {
                 rok = 2100;
-                mies = (Convert.ToInt32(DataUr[2].ToString()) - 40) * 10 + Convert.ToInt32(DataUr[3].ToString());
+                mies = (data[2] - 40) * 10 + data[3];
             }
-            else if (DataUr[2] == '6' || DataUr[2] == '7')
+            else if (data[2] == 6 || data[2] == 7)
             {
                 rok = 2200;
-                mies = (Convert.ToInt32(DataUr[2].ToString()) - 60) * 10 + Convert.ToInt32(DataUr[3].ToString());
+                mies = (data[2] - 60) * 10 + data[3];
             }
-            else if (DataUr[2] == '8' || DataUr[2] == '9')
+            else if (data[2] == 8 || data[2] == 9)
             {
                 rok = 1800;
-                mies = (Convert.ToInt32(DataUr[2].ToString()) - 80) * 10 + Convert.ToInt32(DataUr[3].ToString());
+                mies = (data[2] - 80) * 10 + data[3];
             }
-            rok += Convert.ToInt32(DataUr[0].ToString()) * 10 + Convert.ToInt32(DataUr[1].ToString());
+            rok += data[0] * 10 + data[1];
             DateTime _date;
             if (!DateTime.TryParse(String.Format("{0}-{1}-{2}", rok, mies, dzien), out _date))
                 return "b/d";
