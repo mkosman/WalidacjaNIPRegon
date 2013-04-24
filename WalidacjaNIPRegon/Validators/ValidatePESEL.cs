@@ -15,6 +15,20 @@ namespace WalidacjaNIPRegon.Validators
         };
 
         private byte[] wagi = new byte[10] { 1, 3, 7, 9, 1, 3, 7, 9, 1, 3 };
+        private int[] stulecie = new int[]{
+            00, 00,     // 1900
+            20, 20,     // 2000
+            40, 40,     // 2100
+            60, 60,     // 2200
+            80, 80,     // 1800
+        };
+        private int[] lata = new int[] {
+            1900, 1900,
+            2000, 2000,
+            2100, 2100,
+            2200, 2200,
+            1800, 1800,
+        };
         int _SK = 0;
         int _suma = 0;
         byte a = 0;
@@ -100,7 +114,6 @@ namespace WalidacjaNIPRegon.Validators
                 }
             }
         }
-
         private String ParseDate(String DataUr)
         {
             int rok = 0;
@@ -112,32 +125,9 @@ namespace WalidacjaNIPRegon.Validators
                 if (!Int32.TryParse(DataUr[i].ToString(), out data[i]))
                     return "b/d";
 
-            if (data[2] == 0 || data[2] == 1)
-            {
-                rok = 1900;
-                mies = data[2] * 10 + data[3];
-            }
-            else if (data[2] == 2 || data[2] == 3)
-            {
-                rok = 2000;
-                mies = (data[2] - 20) * 10 + data[3];
-            }
-            else if (data[2] == 4 || data[2] == 5)
-            {
-                rok = 2100;
-                mies = (data[2] - 40) * 10 + data[3];
-            }
-            else if (data[2] == 6 || data[2] == 7)
-            {
-                rok = 2200;
-                mies = (data[2] - 60) * 10 + data[3];
-            }
-            else if (data[2] == 8 || data[2] == 9)
-            {
-                rok = 1800;
-                mies = (data[2] - 80) * 10 + data[3];
-            }
-            rok += data[0] * 10 + data[1];
+            mies = (data[2] - stulecie[data[2]]) * 10 + data[3];
+            rok = lata[data[2]] + data[0] * 10 + data[1];
+
             DateTime _date;
             if (!DateTime.TryParse(String.Format("{0}-{1}-{2}", rok, mies, dzien), out _date))
                 return "b/d";
