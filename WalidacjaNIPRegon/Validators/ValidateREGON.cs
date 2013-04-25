@@ -10,12 +10,7 @@ namespace WalidacjaNIPRegon.Validators
         private byte[] wagi_09 = new byte[] { 8, 9, 2, 3, 4, 5, 6, 7, };
         private byte[] wagi_14 = new byte[] { 2, 4, 8, 5, 0, 9, 7, 3, 6, 1, 2, 4, 8, };
 
-        private EventHandler _OnValidated = null;
-        public EventHandler OnValidated
-        {
-            get { return _OnValidated; }
-            set { _OnValidated = value; }
-        }
+        public event EventHandler OnValidated = null;
 
         public REGON() { }
         ~REGON() { }
