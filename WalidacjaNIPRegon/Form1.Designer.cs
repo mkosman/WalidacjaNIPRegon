@@ -32,6 +32,7 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.rbPESEL = new System.Windows.Forms.RadioButton();
+            this.rbRegon = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -52,6 +53,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.rbRegon);
             this.groupBox1.Controls.Add(this.rbPESEL);
             this.groupBox1.Location = new System.Drawing.Point(13, 13);
             this.groupBox1.Name = "groupBox1";
@@ -70,6 +72,17 @@
             this.rbPESEL.Text = "PESEL";
             this.rbPESEL.UseVisualStyleBackColor = true;
             this.rbPESEL.CheckedChanged += new System.EventHandler(this.FunctionSelect);
+            // 
+            // rbRegon
+            // 
+            this.rbRegon.AutoSize = true;
+            this.rbRegon.Location = new System.Drawing.Point(7, 43);
+            this.rbRegon.Name = "rbRegon";
+            this.rbRegon.Size = new System.Drawing.Size(64, 17);
+            this.rbRegon.TabIndex = 3;
+            this.rbRegon.TabStop = true;
+            this.rbRegon.Text = "REGON";
+            this.rbRegon.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -96,6 +109,7 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RadioButton rbPESEL;
+        private System.Windows.Forms.RadioButton rbRegon;
 
 
     }

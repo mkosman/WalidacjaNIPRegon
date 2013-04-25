@@ -28,6 +28,11 @@ namespace WalidacjaNIPRegon
                 ControlForm = new ControlUI.UI_PESEL();
                 ControlForm.Parent = panelForm;
             }
+            else if (rbRegon.Checked)
+            {
+                ControlForm = new ControlUI.UI_REGON();
+                ControlForm.Parent = panelForm;
+            }
         }
     }
 }
