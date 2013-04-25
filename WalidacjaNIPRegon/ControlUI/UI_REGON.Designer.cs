@@ -30,10 +30,10 @@
         {
             this.lbTitle = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lbStatus = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.textREGON = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.lbStatus = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -61,23 +61,13 @@
             this.panel1.Size = new System.Drawing.Size(346, 266);
             this.panel1.TabIndex = 1;
             // 
-            // textREGON
+            // lbStatus
             // 
-            this.textREGON.Location = new System.Drawing.Point(163, 33);
-            this.textREGON.MaxLength = 11;
-            this.textREGON.Name = "textREGON";
-            this.textREGON.Size = new System.Drawing.Size(140, 20);
-            this.textREGON.TabIndex = 5;
-            this.textREGON.WordWrap = false;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(47, 36);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(115, 13);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Wprowadź nr. REGON";
+            this.lbStatus.Location = new System.Drawing.Point(47, 101);
+            this.lbStatus.Name = "lbStatus";
+            this.lbStatus.Size = new System.Drawing.Size(256, 34);
+            this.lbStatus.TabIndex = 7;
+            this.lbStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label2
             // 
@@ -90,13 +80,24 @@
             this.label2.Text = "W przypadku posiadania numeru 7-mio cyfrowego dopisz na począktu 00";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // lbStatus
+            // textREGON
             // 
-            this.lbStatus.Location = new System.Drawing.Point(47, 101);
-            this.lbStatus.Name = "lbStatus";
-            this.lbStatus.Size = new System.Drawing.Size(256, 34);
-            this.lbStatus.TabIndex = 7;
-            this.lbStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.textREGON.Location = new System.Drawing.Point(163, 33);
+            this.textREGON.MaxLength = 11;
+            this.textREGON.Name = "textREGON";
+            this.textREGON.Size = new System.Drawing.Size(140, 20);
+            this.textREGON.TabIndex = 5;
+            this.textREGON.WordWrap = false;
+            this.textREGON.TextChanged += new System.EventHandler(this.textREGON_TextChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(47, 36);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(115, 13);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Wprowadź nr. REGON";
             // 
             // UI_REGON
             // 
