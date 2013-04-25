@@ -9,8 +9,6 @@ namespace WalidacjaNIPRegon.Validators
     {
         private byte[] wagi_09 = new byte[] { 8, 9, 2, 3, 4, 5, 6, 7, };
         private byte[] wagi_14 = new byte[] { 2, 4, 8, 5, 0, 9, 7, 3, 6, 1, 2, 4, 8, };
-        private int _SK = 0;
-        private int _suma = 0;
 
         private EventHandler _OnValidated = null;
         public EventHandler OnValidated
@@ -40,41 +38,51 @@ namespace WalidacjaNIPRegon.Validators
             set
             {
                 value = value.Trim();
-
+                int _suma9 = 0, _suma14 = 0;
+                int _SK9 = 0, _SK14 = 0;
                 if (value.Length != 9 && value.Length != 14)
                 {
                     ValidatedOK = false;
                     return;
                 }
 
-                int a = 0;
-                byte[] bREGON = new byte[value.Length];
+                int[] bREGON = new int[value.Length];
 
+                int a = 0;
                 foreach (char l in value)
-                    if (!Byte.TryParse(l.ToString(), out bREGON[a++]))
+                    if (!Int32.TryParse(l.ToString(), out bREGON[a++]))
                     {
                         ValidatedOK = false;
                         return;
                     }
+                                                                
+                // wyznaczenie dla 9 cyfrowego regonu
+                _SK9 = bREGON[8];
+                for (int i = 0; i < 9; i++)
+                    _suma9 += wagi_09[i] * bREGON[i];
 
-                if (!Int32.TryParse(value[value.Length == 9 ? 8 : 13].ToString(), out _SK))
+                if (value.Length == 14)
                 {
-                    ValidatedOK = false;
-                    return;
+                    _SK14 = bREGON[13];
+                for (int i = 0; i < 14; i++)
+                    _suma14 += wagi_14[i] * bREGON[i];
                 }
 
-                _suma = 0;
-                for (int i = 0; i < (value.Length == 9 ? 8 : 13); i++)
-                    _suma += (value.Length == 9 ? wagi_09[i] : wagi_14[i]) * bREGON[i];
-
-                ValidatedOK = (((_suma % 11) != 10) ? (_suma % 11) : 0) == _SK;
+               bool bSK9 =((((_suma9 % 11) != 10) ? (_suma9 % 11) : 0) == _SK9);
+               if (value.Length == 14)
+               {
+                   bool bSK14 = ((((_suma14 % 11) != 10) ? (_suma14 % 11) : 0) == _SK14);
+                   ValidatedOK = (bSK9 == true) && (bSK14 == true);
+               }
+               else
+                   ValidatedOK = bSK9;
             }
         }
 
-        public bool IsValid(String REGON, bool DisableEvent = true)
+        public bool IsValid(String nREGON, bool DisableEvent = true)
         {
             _DisableEvent = DisableEvent;
-            NrREGON = REGON;
+            NrREGON = nREGON;
             _DisableEvent = !DisableEvent;
             return ValidatedOK;
         }

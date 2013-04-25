@@ -32,6 +32,8 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.textREGON = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lbStatus = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -49,6 +51,8 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.lbStatus);
+            this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.textREGON);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -57,7 +61,7 @@
             this.panel1.Size = new System.Drawing.Size(346, 266);
             this.panel1.TabIndex = 1;
             // 
-            // textPESEL
+            // textREGON
             // 
             this.textREGON.Location = new System.Drawing.Point(163, 33);
             this.textREGON.MaxLength = 11;
@@ -74,6 +78,25 @@
             this.label1.Size = new System.Drawing.Size(115, 13);
             this.label1.TabIndex = 4;
             this.label1.Text = "Wprowadź nr. REGON";
+            // 
+            // label2
+            // 
+            this.label2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label2.ForeColor = System.Drawing.Color.DimGray;
+            this.label2.Location = new System.Drawing.Point(47, 56);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(256, 41);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "W przypadku posiadania numeru 7-mio cyfrowego dopisz na począktu 00";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lbStatus
+            // 
+            this.lbStatus.Location = new System.Drawing.Point(47, 101);
+            this.lbStatus.Name = "lbStatus";
+            this.lbStatus.Size = new System.Drawing.Size(256, 34);
+            this.lbStatus.TabIndex = 7;
+            this.lbStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // UI_REGON
             // 
@@ -96,5 +119,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TextBox textREGON;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lbStatus;
+        private System.Windows.Forms.Label label2;
     }
 }
